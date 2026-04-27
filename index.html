@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Farmácia - Sistema de Controlo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-pharmacy sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-capsule"></i> Farmácia Central
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#produtos" data-bs-toggle="tab">
+                            <i class="bi bi-box-seam"></i> Medicamentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#vendas" data-bs-toggle="tab">
+                            <i class="bi bi-graph-up"></i> Vendas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#clientes" data-bs-toggle="tab">
+                            <i class="bi bi-people"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#fornecedores" data-bs-toggle="tab">
+                            <i class="bi bi-truck"></i> Fornecedores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#relatorios" data-bs-toggle="tab">
+                            <i class="bi bi-file-earmark-pdf"></i> Relatórios
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <div class="tab-content">
+            
+            <!-- DASHBOARD -->
+            <div class="tab-pane fade show active" id="dashboard">
+                <h2 class="mb-4"><i class="bi bi-speedometer2"></i> Dashboard</h2>
+                
+                <!-- Estatísticas -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card bg-primary text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Produtos em Stock</h5>
+                                <h2 id="totalProdutos">0</h2>
+                                <small>medicamentos ativos</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card bg-success text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Receita Total</h5>
+                                <h2 id="receitaTotal">€0.00</h2>
+                                <small>este mês</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card bg-warning text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Clientes</h5>
+                                <h2 id="totalClientes">0</h2>
+                                <small>registados</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card bg-danger text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Alertas</h5>
+                                <h2 id="alertas">0</h2>
+                                <small>produtos com baixo stock</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produtos com baixo stock -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">
+                                <h5><i class="bi bi-exclamation-triangle"></i> Alertas de Stock</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="alertasStock" class="alert-list">
+                                    <p class="text-muted">Sem alertas de stock</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Últimas vendas -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5><i class="bi bi-graph-up"></i> Últimas Vendas</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm" id="ultimasVendas">
+                                    <thead>
+                                        <tr>
+                                            <th>Medicamento</th>
+                                            <th>Qtd</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td colspan="3" class="text-muted">Sem vendas registadas</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEDICAMENTOS -->
+            <div class="tab-pane fade" id="produtos">
+                <h2 class="mb-4"><i class="bi bi-box-seam"></i> Gestão de Medicamentos</h2>
+
+                <!-- Botão Adicionar -->
+                <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalProduto">
+                    <i class="bi bi-plus-circle"></i> Adicionar Medicamento
+                </button>
+
+                <!-- Tabela de Produtos -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="tabelaProdutos">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nome</th>
+                                        <th>Categoria</th>
+                                        <th>Preço</th>
+                                        <th>Stock</th>
+                                        <th>Validade</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoProdutos">
+                                    <tr><td colspan="7" class="text-center text-muted">Nenhum medicamento registado</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Adicionar/Editar Produto -->
+                <div class="modal fade" id="modalProduto" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-pharmacy text-white">
+                                <h5 class="modal-title">Adicionar Medicamento</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="formProduto">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="codigo" class="form-label">Código</label>
+                                        <input type="text" class="form-control" id="codigo" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nomeProd" class="form-label">Nome do Medicamento</label>
+                                        <input type="text" class="form-control" id="nomeProd" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="categoria" class="form-label">Categoria</label>
+                                        <select class="form-select" id="categoria" required>
+                                            <option value="">Selecione</option>
+                                            <option value="Analgésicos">Analgésicos</option>
+                                            <option value="Antibióticos">Antibióticos</option>
+                                            <option value="Vitaminas">Vitaminas</option>
+                                            <option value="Dermocosméticos">Dermocosméticos</option>
+                                            <option value="Suplementos">Suplementos</option>
+                                        </select>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="preco" class="form-label">Preço (€)</label>
+                                            <input type="number" class="form-control" id="preco" step="0.01" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="stock" class="form-label">Stock</label>
+                                            <input type="number" class="form-control" id="stock" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="validade" class="form-label">Data de Validade</label>
+                                        <input type="date" class="form-control" id="validade" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VENDAS -->
+            <div class="tab-pane fade" id="vendas">
+                <h2 class="mb-4"><i class="bi bi-graph-up"></i> Gestão de Vendas</h2>
+
+                <!-- Botão Nova Venda -->
+                <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalVenda">
+                    <i class="bi bi-plus-circle"></i> Registar Venda
+                </button>
+
+                <!-- Tabela de Vendas -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="tabelaVendas">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID Venda</th>
+                                        <th>Cliente</th>
+                                        <th>Medicamento</th>
+                                        <th>Quantidade</th>
+                                        <th>Valor Total</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoVendas">
+                                    <tr><td colspan="7" class="text-center text-muted">Nenhuma venda registada</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Nova Venda -->
+                <div class="modal fade" id="modalVenda" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-pharmacy text-white">
+                                <h5 class="modal-title">Registar Nova Venda</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="formVenda">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="clienteVenda" class="form-label">Cliente</label>
+                                        <input type="text" class="form-control" id="clienteVenda" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="medicamentoVenda" class="form-label">Medicamento</label>
+                                        <select class="form-select" id="medicamentoVenda" required>
+                                            <option value="">Selecione</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="quantidadeVenda" class="form-label">Quantidade</label>
+                                        <input type="number" class="form-control" id="quantidadeVenda" min="1" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="precoVenda" class="form-label">Preço Unitário (€)</label>
+                                        <input type="number" class="form-control" id="precoVenda" step="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Registar Venda</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLIENTES -->
+            <div class="tab-pane fade" id="clientes">
+                <h2 class="mb-4"><i class="bi bi-people"></i> Gestão de Clientes</h2>
+
+                <!-- Botão Adicionar -->
+                <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalCliente">
+                    <i class="bi bi-plus-circle"></i> Adicionar Cliente
+                </button>
+
+                <!-- Tabela de Clientes -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="tabelaClientes">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Data Registo</th>
+                                        <th>Total Gasto</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoClientes">
+                                    <tr><td colspan="6" class="text-center text-muted">Nenhum cliente registado</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Adicionar Cliente -->
+                <div class="modal fade" id="modalCliente" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-pharmacy text-white">
+                                <h5 class="modal-title">Adicionar Cliente</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="formCliente">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="nomeCliente" class="form-label">Nome Completo</label>
+                                        <input type="text" class="form-control" id="nomeCliente" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="emailCliente" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="emailCliente" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="telefoneCliente" class="form-label">Telefone</label>
+                                        <input type="tel" class="form-control" id="telefoneCliente" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORNECEDORES -->
+            <div class="tab-pane fade" id="fornecedores">
+                <h2 class="mb-4"><i class="bi bi-truck"></i> Gestão de Fornecedores</h2>
+
+                <!-- Botão Adicionar -->
+                <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalFornecedor">
+                    <i class="bi bi-plus-circle"></i> Adicionar Fornecedor
+                </button>
+
+                <!-- Tabela de Fornecedores -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="tabelaFornecedores">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Empresa</th>
+                                        <th>Contacto</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoFornecedores">
+                                    <tr><td colspan="5" class="text-center text-muted">Nenhum fornecedor registado</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Adicionar Fornecedor -->
+                <div class="modal fade" id="modalFornecedor" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-pharmacy text-white">
+                                <h5 class="modal-title">Adicionar Fornecedor</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="formFornecedor">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="empresa" class="form-label">Nome da Empresa</label>
+                                        <input type="text" class="form-control" id="empresa" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="contacto" class="form-label">Pessoa de Contacto</label>
+                                        <input type="text" class="form-control" id="contacto" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="emailFornecedor" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="emailFornecedor" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="telefoneFornecedor" class="form-label">Telefone</label>
+                                        <input type="tel" class="form-control" id="telefoneFornecedor" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RELATÓRIOS -->
+            <div class="tab-pane fade" id="relatorios">
+                <h2 class="mb-4"><i class="bi bi-file-earmark-pdf"></i> Relatórios</h2>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-pharmacy text-white">
+                                <h5>Filtros de Relatório</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="dataInicio" class="form-label">Data Início</label>
+                                    <input type="date" class="form-control" id="dataInicio">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="dataFim" class="form-label">Data Fim</label>
+                                    <input type="date" class="form-control" id="dataFim">
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="gerarRelatorio()">
+                                    <i class="bi bi-download"></i> Gerar Relatório
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-pharmacy text-white">
+                                <h5>Resumo do Período</h5>
+                            </div>
+                            <div class="card-body" id="resumoRelatorio">
+                                <p class="text-muted">Selecione um período para gerar o relatório</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header bg-pharmacy text-white">
+                        <h5>Detalhes do Relatório</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="detalhesRelatorio" class="table-responsive">
+                            <p class="text-muted">Nenhum relatório gerado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-pharmacy text-white text-center py-3 mt-5">
+        <p>&copy; 2026 Farmácia Central - Sistema de Gestão | Desenvolvido com ❤️</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

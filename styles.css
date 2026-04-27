@@ -1,0 +1,253 @@
+:root {
+    --pharmacy-color: #1e8449;
+    --pharmacy-light: #27ae60;
+    --pharmacy-dark: #145a32;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.bg-pharmacy {
+    background: linear-gradient(135deg, var(--pharmacy-color) 0%, var(--pharmacy-light) 100%) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.navbar-brand i {
+    margin-right: 8px;
+    font-size: 1.8rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card {
+    border-radius: 12px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(30px, -30px);
+}
+
+.stat-card .card-body {
+    position: relative;
+    z-index: 1;
+}
+
+.stat-card h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.stat-card small {
+    opacity: 0.9;
+    font-size: 0.95rem;
+}
+
+/* Tabs */
+.nav-tabs .nav-link {
+    color: var(--pharmacy-color);
+    border: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    border-bottom: 3px solid var(--pharmacy-color);
+    color: var(--pharmacy-dark);
+}
+
+.nav-tabs .nav-link.active {
+    color: white;
+    background: linear-gradient(135deg, var(--pharmacy-color) 0%, var(--pharmacy-light) 100%);
+    border: none;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Tables */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead.table-dark {
+    background: linear-gradient(135deg, var(--pharmacy-color) 0%, var(--pharmacy-light) 100%) !important;
+}
+
+.table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(30, 132, 73, 0.05);
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--pharmacy-color);
+}
+
+/* Botões */
+.btn-primary {
+    background: linear-gradient(135deg, var(--pharmacy-color) 0%, var(--pharmacy-light) 100%);
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--pharmacy-dark) 0%, var(--pharmacy-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 132, 73, 0.3);
+}
+
+.btn-success {
+    background: #27ae60;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: #1e8449;
+    transform: translateY(-2px);
+}
+
+/* Modals */
+.modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--pharmacy-color);
+    margin-bottom: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--pharmacy-color);
+    box-shadow: 0 0 0 0.2rem rgba(30, 132, 73, 0.25);
+}
+
+/* Alerts */
+.alert-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.alert-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 4px;
+}
+
+.alert-item strong {
+    color: #d39e00;
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, var(--pharmacy-color) 0%, var(--pharmacy-light) 100%);
+    margin-top: 50px;
+    border-top: 2px solid var(--pharmacy-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stat-card h2 {
+        font-size: 1.8rem;
+    }
+
+    .container-fluid {
+        padding: 15px;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+}
+
+/* Animações */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--pharmacy-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
